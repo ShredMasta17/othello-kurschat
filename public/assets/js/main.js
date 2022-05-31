@@ -18,3 +18,9 @@ if (username.length === 0) {//(typeof username == 'undefined' || username === nu
     username = "Anonymous_"+Math.floor(Math.random()*1000);
 }
 $('#messages').prepend('<b>'+username+':</b>');
+
+
+let socket = io();
+socket.on('log',function(array) {
+    console.log.apply.apply(console, array);
+})

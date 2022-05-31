@@ -1,23 +1,4 @@
-/* ******** */
-
-// const http = require('http');
-
-// const hostname = '127.0.0.1';
-// const port = 3000;
-
-// const server = http.createServer((req, res) => {
-//     res.statusCode = 200;
-//     res.setHeader('Content-Type', 'text/plain');
-//     res.end('Hello World');
-// });
-
-// server.listen(port, hostname, () => {
-//     console.log(`Server running at http://${hostname}:${port}/`);
-// });
-
-// console.log('The server is running')
-
-
+/* ***************************** */
 /* Set up the static file server */
 let static = require('node-static');
 
@@ -42,7 +23,7 @@ let app = http.createServer(
     function(request,response) {
         request.addListener('end',
             function() {
-                file.serve(request,response)
+                file.serve(request,response);
             }
         ).resume();
     }
@@ -50,3 +31,28 @@ let app = http.createServer(
 
 
 console.log('The server is running');
+
+
+/* ***************************** */
+/* WSet up the web socket server */
+
+const { Server } = require("socket.io");
+const io = new Server(app);
+
+io.on('connection', (socket) => {
+
+    /* Output a log message on the server and send it to the clients */
+    function serverLog(...messages) {
+        io.emit('log',['**** Message from the server:\n'])
+        messages.forEach((item) => {
+            io.emit('log',['****\t'+item]);
+            console.log(item);
+        })
+    }
+
+    serverLog('a page connected to the server: '+socket.id);
+
+    socket.on('disconnect', ()=> {
+        serverLog('a page disconnected to the server: '+socket.id);
+    })
+})
