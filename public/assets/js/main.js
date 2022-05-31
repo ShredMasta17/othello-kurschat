@@ -1,3 +1,4 @@
+
 function getIRIParameterValue(requestedKey) {
     let pageIRI = window.location.search.substring(1);
     let pageIRIVariables = pageIRI.split('&');
@@ -14,6 +15,7 @@ function getIRIParameterValue(requestedKey) {
 let username = getIRIParameterValue('username');
 if ((typeof username == 'undefined') || (username === null)) {
     username = "Anonymous_"+Math.floor(Math.random()*1000)
+    //$('#messages').prepend('<b>'+username+':</b>')
 }
 
-$('#messages').prepend('<b>'+username+':</b>')
+//$('#messages').prepend('<b>'+username+':</b>')
