@@ -15,5 +15,7 @@ function getIRIParameterValue(requestedKey) {
 let username = getIRIParameterValue('username');
 if (typeof username == 'undefined' || username === null) { 
     username = "Anonymous_"+Math.floor(Math.random()*1000);
+    $('#messages').prepend('<b>'+username+':undddeff</b>');
+
 }
-$('#messages').prepend('<b>'+username+':</b>');
+$('#messages').prepend('<b>'+username+':---</b>');
