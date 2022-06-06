@@ -113,7 +113,6 @@ io.on('connection', (socket) => {
 
         /* Make sure the client was put in the room */
         io.in(room).fetchSockets().then((sockets) => {
-            // serverLog('There are '+sockets.length+ ' clients in the room, ' +room);
 
             /* Socket didn't join the room */
             if ((typeof sockets == 'undefined') || (sockets === null) || !sockets.includes(socket)){
@@ -125,13 +124,13 @@ io.on('connection', (socket) => {
             } 
             /* Socket did join the room */
             else { 
-                /*players[socket.id] = {
+                players[socket.id] = {
                     username: username,
                     room: room
                 }
 
                 /* Announce to everone that is in the room, who else is in the room */
-                /*for (const member of sockets) {
+                for (const member of sockets) { // <-----
                     response = {
                         result: 'success',
                         socket_id: member.id,
@@ -139,17 +138,19 @@ io.on('connection', (socket) => {
                         username: players[member.id].username,
                         count: sockets.length
                     }
-                }*/
+                    
+                    /* Tell everyone a new user has joined the chat */
+                    io.of('/').to(room).emit('join_room_response', response);
+                    serverLog('join_room succeeded', JSON.stringify(response));
+                }
                 
-                response = {};
+                /*response = {};
                 response.result = 'success';
                 response.room = room;
                 response.username = username;
-                response.count = sockets.length;
+                response.count = sockets.length;*/
 
-                /* Tell everyone a new user has joined the chat */
-                io.of('/').to(room).emit('join_room_response', response);
-                serverLog('join_room succeeded', JSON.stringify(response))
+                
             }
         }); 
     });   
@@ -171,8 +172,6 @@ io.on('connection', (socket) => {
             serverLog('player_disconnected succeeded ', JSON.stringify(payload));
 
         }
-
-
     })
     
     /* send_chat_message command handler */
@@ -238,7 +237,7 @@ io.on('connection', (socket) => {
 
 
         /* Handle the command */
-        response = {}; // let response = {};
+        response = {};
         response.result = 'success'; 
         response.username = username;
         response.room = room;
@@ -248,31 +247,5 @@ io.on('connection', (socket) => {
         io.of('/').to(room).emit('send_chat_message_response', response);
         serverLog('send_chat_message command succeeded', JSON.stringify(response));
 
-        // socket.join(room);
-
-        // /* Make sure the client was put in the room */
-        // io.in(room).fetchSockets().then((sockets) => {
-        //     serverLog('There are '+sockets.length+ ' clients in the room, ' +room);
-        //     /* Socket didn't join the room */
-        //     if ((typeof sockets == 'undefined') || (sockets === null) || !sockets.includes(socket)){
-        //         response = {};
-        //         response.result = 'fail';
-        //         response.message = 'Server internal error joining chat room';
-        //         socket.emit('join_room_response', response);
-        //         serverLog('join_room command failed', JSON.stringify(response));
-        //     } 
-        //         /* Socket did join the room */
-        //     else { 
-        //         response = {};
-        //         response.result = 'success';
-        //         response.room = room;
-        //         response.username = username;
-        //         response.count = sockets.length;
-
-        //         /* Tell everyone a new user has joined the chat */
-        //         io.of('/').to(room).emit('join_room_response', response);
-        //         serverLog('join_room succeeded', JSON.stringify(response))
-        //     }
-        // }); 
     });
 }); 

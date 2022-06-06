@@ -11,7 +11,7 @@ function getIRIParameterValue(requestedKey) {
             return value;
         }
     }
-    return value;
+    return null; // <---- 
 }
 
 let username = decodeURI(getIRIParameterValue('username'));
@@ -19,10 +19,11 @@ if ((username.length === 0) || (typeof username == 'undefined') || (username ===
     username = "Anonymous_"+Math.floor(Math.random()*1000);
 }
 
-let chatRoom = 'Lobby'; //decodeURI(getIRIParameterValue('game_id'));
-/*if ((typeof chatRoom == 'undefined') || (chatRoom === null) || (chatRoom === 'null')) { // (chatRoom.length === 0)
+// let chatRoom = 'Lobby'; 
+let chatRoom = decodeURI(getIRIParameterValue('game_id'));
+if ((typeof chatRoom == 'undefined') || (chatRoom === null) || (chatRoom === 'null')) { // (chatRoom.length === 0)
     chatRoom = 'Lobby';
-}*/
+}
 
 /* Set up the socket.io connection to the server */
 let socket = io();
@@ -46,13 +47,13 @@ socket.on('join_room_response', (payload) => {
     }
 
     /* If we are being notified of ourselves, then ignore the message and return */
-    /*if (payload.socket_id === socket.id) {
+    if (payload.socket_id === socket.id) {
         return;
     }
 
     let domElements = $('.socket_' +payload.socket_id);
     /* If we are being repeat notified, then return */
-    /*if (domElements.length !== 0) {
+    if (domElements.length !== 0) {
         return;
     }
 
@@ -70,19 +71,19 @@ socket.on('join_room_response', (payload) => {
     let nodeA = $("<div></div>");
     nodeA.addClass("row");
     nodeA.addClass("align-items-center");
-    nodeA.addClass("socket_"+payload.socket_id);
+    nodeA.addClass("socket_" + payload.socket_id);
     nodeA.hide(); 
 
     let nodeB = $("<div></div>")
     nodeB.addClass("col");
     nodeB.addClass("text-end");
-    nodeB.addClass("socket_"+payload.socket_id);
-    nodeB.append('<h4>'+payload.username+'</h4>');
+    nodeB.addClass("socket_" + payload.socket_id);
+    nodeB.append('<h4>' + payload.username + '</h4>');
 
     let nodeC = $("<div></div>")
     nodeC.addClass("col");
     nodeC.addClass("text-start");
-    nodeC.addClass("socket_"+payload.socket_id);
+    nodeC.addClass("socket_" + payload.socket_id);
     let buttonC = makeInviteButton();
     nodeC.append(buttonC);
 
