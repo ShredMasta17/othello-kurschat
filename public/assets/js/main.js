@@ -18,13 +18,11 @@ let username = decodeURI(getIRIParameterValue('username'));
 if ((username.length === 0) || (typeof username == 'undefined') || (username === null) || (username === 'null')) { 
     username = "Anonymous_"+Math.floor(Math.random()*1000);
 }
-// $('#messages').prepend('<b>'+username+':</b>');
-
 
 let chatRoom = 'Lobby'; //decodeURI(getIRIParameterValue('game_id'));
-if ((typeof chatRoom == 'undefined') || (chatRoom === null) || (chatRoom === 'null')) { // (chatRoom.length === 0)
+/*if ((typeof chatRoom == 'undefined') || (chatRoom === null) || (chatRoom === 'null')) { // (chatRoom.length === 0)
     chatRoom = 'Lobby';
-}
+}*/
 
 /* Set up the socket.io connection to the server */
 let socket = io();
@@ -48,13 +46,13 @@ socket.on('join_room_response', (payload) => {
     }
 
     /* If we are being notified of ourselves, then ignore the message and return */
-    if (payload.socket_id === socket.id) {
+    /*if (payload.socket_id === socket.id) {
         return;
     }
 
     let domElements = $('.socket_' +payload.socket_id);
     /* If we are being repeat notified, then return */
-    if (domElements.length !== 0) {
+    /*if (domElements.length !== 0) {
         return;
     }
 
@@ -67,7 +65,6 @@ socket.on('join_room_response', (payload) => {
                 <button type="button" class="btn btn-primary">Invite</button>
             </div>
         </div>
-
     */
 
     let nodeA = $("<div></div>");
@@ -89,10 +86,10 @@ socket.on('join_room_response', (payload) => {
     let buttonC = makeInviteButton();
     nodeC.append(buttonC);
 
-    nodeA.append(nodeB);
+    nodeA.append(nodeB); 
     nodeA.append(nodeC);
 
-    $('#players').append(nodeA);
+    $("#players").append(nodeA);
     nodeA.show("fade", 1000);
 
 
@@ -110,10 +107,8 @@ socket.on('join_room_response', (payload) => {
         $('#messages').prepend(newNode);
         newNode.show('fade', 500);
     }
-    
 
     // Slide down old entries??
-
 
 });
 
@@ -132,8 +127,6 @@ socket.on('player_disconnected', (payload) => {
         domElements.hide("fade", 500);
     }
 
-
-
     if (payload.count == 1) {
         let newHTML = '<p class=\'left_room_response\'>'+payload.username+' left the '+payload.room+'. (There is '+payload.count+' user in this room)</p>';
         let newNode = $(newHTML);
@@ -148,7 +141,6 @@ socket.on('player_disconnected', (payload) => {
         newNode.show('fade', 500);
     }
     
-
     // Slide down old entries??
 
 });
@@ -178,7 +170,6 @@ socket.on('send_chat_message_response', (payload) => {
     newNode.show('fade', 500);
 
 });
-
 
 /* Request to join the chat room */
 $( () => {

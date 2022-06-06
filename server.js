@@ -125,13 +125,13 @@ io.on('connection', (socket) => {
             } 
             /* Socket did join the room */
             else { 
-                players[socket.id] = {
+                /*players[socket.id] = {
                     username: username,
                     room: room
                 }
 
                 /* Announce to everone that is in the room, who else is in the room */
-                for (const member of sockets) {
+                /*for (const member of sockets) {
                     response = {
                         result: 'success',
                         socket_id: member.id,
@@ -139,13 +139,13 @@ io.on('connection', (socket) => {
                         username: players[member.id].username,
                         count: sockets.length
                     }
-                }
+                }*/
                 
-                /*response = {};
+                response = {};
                 response.result = 'success';
                 response.room = room;
                 response.username = username;
-                response.count = sockets.length;*/
+                response.count = sockets.length;
 
                 /* Tell everyone a new user has joined the chat */
                 io.of('/').to(room).emit('join_room_response', response);
