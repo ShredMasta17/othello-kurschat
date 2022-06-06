@@ -1,69 +1,81 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <style>
-        body {
-            background-color: darkseagreen;
-        }
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <style>
+            body {
+                background-color: darkseagreen;
+            }
 
-    </style>
-    <script>
-        function goToLobby() {
-            let username = encodeURI($('#nameInput').val());
-            window.location.href = "lobby.html?username="+username
-        }
-    </script>
-    <title>Othello-Reversi</title>
-</head>
+        </style>
+        
+        <title>Othello-Reversi</title>
+    </head>
 
-<body>
-    <div class="container-fluid">
-        <div class="row m-3">
-            <div class="col text-center">
-                <a class="btn btn-success text-nowrap" href="about.html">About</a>
+    <body>
+        <div class="container-fluid">
+            <div class="row m-3">
+                <div class="col text-center">
+                    <a class="btn btn-success text-nowrap" href="about.html">About</a>
+                </div>
+                <div class="col text-center">
+                    <a class="btn btn-success text-nowrap" href="https://en.wikipedia.org/wiki/Reversi">Rules</a>
+                </div>
             </div>
-            <div class="col text-center">
-                <a class="btn btn-success text-nowrap" href="https://en.wikipedia.org/wiki/Reversi">Rules</a>
-            </div>
-        </div>
 
-        <div class="row m-3">
-            <div class="col text-center">
-                <img class="img-fluid" src="assets/images/Reversi_Logo.jpg" alt="Reversi Logo 1" />
+            <div class="row m-3">
+                <div class="col text-center">
+                    <img class="img-fluid" src="assets/images/Reversi_Logo.jpg" alt="Reversi Logo 1" />
+                </div>
             </div>
-        </div>
 
-        <div class="row alighn-items-center justify-content-center m-3">
-            <div class="col-8">
-                <div class="input-group">
-                    <span class="input-group-text" id="displayName">Name</span>
-                    <input type="text" class="form-control text-nowrap" id="nameInput"
-                        placeholder="Choose your display name"
-                        aria-label="Enter your display name for use while playing Reversi"
-                        aria-describedby="displayName" />
-                    <button type="submit" class="btm btm-primary text-nowrap" id="lobbyButton"
-                        onclick="goToLobby()">Enter Lobby</button>
+            <div class="row alighn-items-center justify-content-center m-3">
+                <div class="col-8">
+                    <div class="input-group">
+                        <span class="input-group-text" id="displayName">Name</span>
+                        <input type="text" class="form-control text-nowrap" id="nameInput"
+                            placeholder="Choose your display name"
+                            aria-label="Enter your display name for use while playing Reversi"
+                            aria-describedby="displayName" />
+                        <button type="submit" class="btm btm-primary text-nowrap" id="lobbyButton"
+                            onclick="goToLobby()">Enter Lobby</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row m-3">
+                <div class="col text-center">
+                    <img class="img-fluid" src="assets/images/Reversi_Logo.jpg" alt="Reversi Logo 2" />
                 </div>
             </div>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
 
-        <div class="row m-3">
-            <div class="col text-center">
-                <img class="img-fluid" src="assets/images/Reversi_Logo.jpg" alt="Reversi Logo 2" />
-            </div>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
-</body>
+        <script>
+            function goToLobby() {
+                let username = encodeURI($('#nameInput').val());
+                window.location.href = "lobby.html?username="+username
+            }
+            
+            $('#nameInput').keypress( function (e){
+                let key = e.which;
+                if (key == 13) { // The 'enter' key
+                    $('button[id = lobbyButton]').click();
+                    return false
+                }
+            })
+        </script>
+
+    </body>
+
 </html>
